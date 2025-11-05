@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats Académiques - ISIPA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #34495e;
+            --secondary-color: #2980b9;
+            --light-color: #2c3e50;
+            --dark-color: #ecf0f1;
+            --background-color: #1a1a1a;
+            --text-color: #f5f5f5;
+            --card-bg: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            width: 40%;
+            border-radius:50%;
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            animation: fadeIn 1s ease;
+        }
+
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            animation: slideUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--dark-color);
+            animation: slideUp 1.2s ease;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            animation: slideUp 1.4s ease;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: none;
+            box-shadow: var(--shadow);
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: white;
+            color: var(--dark-color);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .search-box button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-box button:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .result-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-top: 40px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+            background-color: var(--card-bg, white);
+            color: var(--text-color, var(--dark-color));
+        }
+
+        .student-info {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-color: var(--text-color, rgba(0, 0, 0, 0.1));
+        }
+
+        .student-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .student-info p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .fees-warning {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: rgba(231, 76, 60, 0.1);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .results-table th, .results-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-color: var(--text-color, rgba(0, 0, 0, 0.1));
+        }
+
+        .results-table th {
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .results-table tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.05);
+            background-color: var(--text-color, rgba(0, 0, 0, 0.05));
+        }
+
+        .results-table tr:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            background-color: var(--text-color, rgba(0, 0, 0, 0.1));
+        }
+
+        /* MODIFICATIONS COULEURS - SUJET, COTES, MAX EN NOIR */
+        .results-table td:first-child, /* Matières */
+        .results-table td:nth-child(2), /* Cotes */
+        .results-table td:nth-child(3) { /* Max */
+            color: #000000 !important;
+        }
+
+        .validation {
+            font-weight: bold;
+        }
+
+        /* MODIFICATIONS COULEURS - VALIDÉ EN VERT, ÉCHOUÉ ET N/A EN ROUGE */
+        .valid {
+            color: var(--success-color) !important;
+        }
+
+        .invalid {
+            color: var(--accent-color) !important;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            animation: fadeIn 1s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        /* Styles pour les mentions */
+        .mention-ajournee {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .mention-satisfaction {
+            color: var(--warning-color);
+            font-weight: bold;
+        }
+
+        .mention-distinction {
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .mention-grande-distinction {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .mention-haute-distinction {
+            color: #9b59b6;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+
+        .footer-content p {
+            margin-bottom: 10px;
+        }
+
+        .slogan {
+            font-style: italic;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+            }
+        }
+
+        .error-message {
+            color: var(--accent-color);
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+
+        .not-available-message {
+            color: var(--warning-color);
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .print-btn {
+            display: block;
+            margin: 30px auto 0;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .print-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .result-container, .result-container * {
+                visibility: visible;
+            }
+            .result-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+            }
+            .print-btn, .theme-toggle {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+            
+            .stat-card {
+                min-width: 100%;
+            }
+            
+            .results-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="floating-elements">
+            <!-- Floating elements will be added by JavaScript -->
+        </div>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="Images/1717267750802.jpg" alt="Logo ISIPA" id="logo-img">
+                <div class="logo-text">
+                    <h1>Institut Supérieur d'Informatique, Programmation et Analyse</h1>
+                    <p>Consultez vos résultats académiques en ligne</p>
+                </div>
+            </div>
+            <button class="theme-toggle" id="themeToggle">
+                <span id="themeIcon">🌙</span>
+                <span id="themeText">Mode sombre</span>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <h2>Résultats de la Session</h2>
+            <p>Entrez votre numéro de matricule pour consulter vos résultats académiques</p>
+            
+            <div class="search-box">
+                <input type="text" id="matriculeInput" placeholder="Votre numéro de matricule...">
+                <button id="searchBtn">Rechercher</button>
+            </div>
+            
+            <div class="error-message" id="errorMessage">
+                Numéro de matricule invalide. Veuillez réessayer.
+            </div>
+            
+            <div class="not-available-message" id="notAvailableMessage">
+                <i class="fas fa-clock"></i> Les résultats ne sont pas encore disponibles. Veuillez réessayer plus tard.
+            </div>
+            
+            <div class="loading" id="loadingIndicator">
+                <div class="spinner"></div>
+                <p>Recherche en cours...</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="result-container" id="resultContainer">
+            <div class="student-info" id="studentInfo">
+                <h3 id="studentName">John Doe</h3>
+                <p>Matricule: <span id="displayMatricule">123456</span> | Promotion: <span id="promotion">L1 INFO</span> | Session: <span id="session">1ère Session</span></p>
+                <!-- Zone pour afficher l'alerte des frais non payés -->
+                <div class="fees-warning" id="feesWarning" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Vous n'êtes pas en ordre avec les frais académiques</span>
+                </div>
+            </div>
+            
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Matières</th>
+                        <th>Cotes</th>
+                        <th>Max</th>
+                        <th>Validation</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody">
+                    <!-- Results will be populated by JavaScript -->
+                </tbody>
+            </table>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <h4>Moyenne Générale</h4>
+                    <p id="averageScore">75%</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Crédits Obtenus</h4>
+                    <p id="creditsEarned">45</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Mention</h4>
+                    <p id="mention">Distinction</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Décision du Jury</h4>
+                    <p id="juryDecision">Bon résultat avec mérite</p>
+                </div>
+            </div>
+            
+            <button class="print-btn" id="printBtn">Imprimer les résultats</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-content">
+            <p>Institut Supérieur d'Informatique, Programmation et Analyse</p>
+            <p>© 2026 </p>
+            <p class="slogan">NOTRE CHALLENGE, VOTRE REUSSITE</p>
+        </div>
+    </footer>
+
+    <script>
+        // Base de données des étudiants
+        const studentsDatabase = {
+            "ISIPA2023001": {
+                name: "Mokuba Elenga Osée",
+                promotion: "L1 INFO",
+                results: [
+                    { subject: "Algorithmique", score: 23, max: 100 },
+                    { subject: "Programmation Web", score: 54, max: 100 },
+                    { subject: "Bases de Données", score: 71, max: 100 },
+                    { subject: "Mathématiques", score: 60, max: 100 },
+                    { subject: "Systèmes d'Information", score: 88, max: 100 }
+                ],
+                creditsEarned: 30,
+                feesPaid: false,
+                resultsAvailable: true
+            },
+            "ISIPA2023002": {
+                name: "Mokuba Aifila Alexendre",
+                promotion: "L2 INFO",
+                results: [
+                    { subject: "Programmation Orientée Objet", score: 60, max: 100 },
+                    { subject: "Réseaux Informatiques", score: 40, max: 100 },
+                    { subject: "Analyse des Données", score: 62, max: 100 },
+                    { subject: "Gestion de Projet", score: 50, max: 100 },
+                    { subject: "Sécurité Informatique", score: 20, max: 100 }
+                ],
+                creditsEarned: 48,
+                feesPaid: true,
+                resultsAvailable: true
+            },
+            "ISIPA2023003": {
+                name: "Kieyele Kasiama Steve",
+                promotion: "L3 INFO",
+                results: [
+                    { subject: "Intelligence Artificielle", score: 38, max: 100 },
+                    { subject: "Développement Mobile", score: undefined },
+                    { subject: "Cloud Computing", score: 72, max: 100 },
+                    { subject: "Big Data", score: 68, max: 100 },
+                    { subject: "Ethique Informatique", score: 90, max: 100 }
+                ],
+                creditsEarned: 42,
+                feesPaid: true,
+                resultsAvailable: true
+            },
+            "ISIPA2023004": {
+                name: "Mokuba Maowa Ruth",
+                promotion: "L2 INFO",
+                results: [
+                    { subject: "Intelligence Artificielle", score: 64, max: 100 },
+                    { subject: "Développement Mobile", score: undefined },
+                    { subject: "Cloud Computing", score: 88, max: 100 },
+                    { subject: "Big Data", score: 90, max: 100 },
+                    { subject: "Ethique Informatique", score: 93, max: 100 }
+                ],
+                creditsEarned: 45,
+                feesPaid: true,
+                resultsAvailable: true
+            }
+        };
+
+        // Liste des matricules dont les résultats ne sont pas encore disponibles
+        const unavailableMatricules = ["ISIPA2023005", "ISIPA2023006", "ISIPA2023007"];
+
+        // DOM Elements
+        const matriculeInput = document.getElementById('matriculeInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const resultContainer = document.getElementById('resultContainer');
+        const studentName = document.getElementById('studentName');
+        const displayMatricule = document.getElementById('displayMatricule');
+        const promotion = document.getElementById('promotion');
+        const session = document.getElementById('session');
+        const resultsBody = document.getElementById('resultsBody');
+        const averageScore = document.getElementById('averageScore');
+        const creditsEarned = document.getElementById('creditsEarned');
+        const mention = document.getElementById('mention');
+        const juryDecision = document.getElementById('juryDecision');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const errorMessage = document.getElementById('errorMessage');
+        const notAvailableMessage = document.getElementById('notAvailableMessage');
+        const feesWarning = document.getElementById('feesWarning');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        const printBtn = document.getElementById('printBtn');
+        const floatingElements = document.querySelector('.floating-elements');
+
+        // Create floating elements
+        function createFloatingElements() {
+            const colors = ['rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.2)', 'rgba(255, 255, 255, 0.1)'];
+            
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.classList.add('floating-element');
+                
+                const size = Math.random() * 100 + 50;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100 + 100;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                element.style.width = `${size}px`;
+                element.style.height = `${size}px`;
+                element.style.left = `${posX}%`;
+                element.style.top = `${posY}%`;
+                element.style.background = color;
+                element.style.animationDuration = `${duration}s`;
+                element.style.animationDelay = `${delay}s`;
+                
+                floatingElements.appendChild(element);
+            }
+        }
+
+        // Theme toggle
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Mode sombre';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Mode clair';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Check for saved theme preference
+        function checkTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Mode clair';
+            }
+        }
+
+        // Calculate average score
+        function calculateAverage(results) {
+            const validResults = results.filter(course => course.score !== undefined);
+            if (validResults.length === 0) return 0;
+            
+            const total = validResults.reduce((sum, course) => sum + course.score, 0);
+            return Math.round(total / validResults.length);
+        }
+
+        // Display results
+        function displayResults(matricule) {
+            const student = studentsDatabase[matricule];
+            
+            if (!student) {
+                showError();
+                return;
+            }
+            
+            // Vérification de la disponibilité des résultats
+            if (!student.resultsAvailable) {
+                showNotAvailable();
+                return;
+            }
+            
+            // Afficher l'alerte si les frais ne sont pas payés
+            if (!student.feesPaid) {
+                feesWarning.style.display = 'flex';
+            } else {
+                feesWarning.style.display = 'none';
+            }
+
+            // Mettre à jour les informations sur l'étudiant
+            studentName.textContent = student.name;
+            displayMatricule.textContent = matricule;
+            promotion.textContent = student.promotion;
+            session.textContent = "1ère Session";
+
+            // Vérification des cotes manquantes
+            const hasMissingScores = student.results.some(course => course.score === undefined);
+
+            // Mettre à jour le tableau des résultats
+            resultsBody.innerHTML = '';
+            student.results.forEach(course => {
+                const row = document.createElement('tr');
+                const isPassed = course.score !== undefined && course.score >= 50;
+
+                row.innerHTML = `
+                    <td>${course.subject}</td>
+                    <td>${course.score !== undefined ? course.score : 'N/A'}</td>
+                    <td>${course.max}</td>
+                    <td class="validation ${isPassed ? 'valid' : 'invalid'}">
+                        ${course.score !== undefined ? (isPassed ? 'Validé' : 'Échoué') : 'N/A'}
+                    </td>
+                `;
+
+                resultsBody.appendChild(row);
+            });
+
+            // Mettre à jour les statistiques
+            if (hasMissingScores) {
+                averageScore.textContent = "Attente";
+                creditsEarned.textContent = "Attente";
+                mention.textContent = "Attente";
+                juryDecision.textContent = "Attente des résultats";
+            } else {
+                const avg = calculateAverage(student.results);
+                averageScore.textContent = `${avg}%`;
+                creditsEarned.textContent = student.creditsEarned;
+
+                // Déterminer la mention et la décision du jury
+                let mentionText = '';
+                let juryDecisionText = '';
+                let mentionClass = '';
+
+                if (avg < 50) {
+                    mentionText = 'Ajournée';
+                    mentionClass = 'mention-ajournee';
+                    juryDecisionText = 'Échec, l\'étudiant doit repasser l\'examen ou le cours.';
+                } else if (avg >= 50 && avg < 65) {
+                    mentionText = 'Satisfaction';
+                    mentionClass = 'mention-satisfaction';
+                    juryDecisionText = 'Réussi, mais avec quelques matières à refaire.';
+                } else if (avg >= 65 && avg < 75) {
+                    mentionText = 'Distinction';
+                    mentionClass = 'mention-distinction';
+                    juryDecisionText = 'Bon résultat avec mérite.';
+                } else if (avg >= 75 && avg < 85) {
+                    mentionText = 'Grande distinction';
+                    mentionClass = 'mention-grande-distinction';
+                    juryDecisionText = 'Excellent résultat.';
+                } else {
+                    mentionText = 'La plus haute distinction';
+                    mentionClass = 'mention-haute-distinction';
+                    juryDecisionText = 'Résultat exceptionnel.';
+                }
+
+                // Mettre à jour les éléments avec les classes appropriées
+                mention.textContent = mentionText;
+                mention.className = mentionClass;
+                juryDecision.textContent = juryDecisionText;
+            }
+
+            // Afficher les résultats
+            loadingIndicator.style.display = 'none';
+            resultContainer.style.display = 'block';
+            
+            // Faire défiler vers les résultats
+            setTimeout(() => {
+                resultContainer.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        // Show error message
+        function showError() {
+            loadingIndicator.style.display = 'none';
+            errorMessage.style.display = 'block';
+            notAvailableMessage.style.display = 'none';
+            resultContainer.style.display = 'none';
+            
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        // Show results not available message
+        function showNotAvailable() {
+            loadingIndicator.style.display = 'none';
+            notAvailableMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+            resultContainer.style.display = 'none';
+            
+            setTimeout(() => {
+                notAvailableMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        // Search function
+        function searchResults() {
+            const matricule = matriculeInput.value.trim().toUpperCase();
+            
+            if (!matricule) {
+                showError();
+                return;
+            }
+            
+            // Vérifier si les résultats ne sont pas encore disponibles
+            if (unavailableMatricules.includes(matricule)) {
+                loadingIndicator.style.display = 'block';
+                resultContainer.style.display = 'none';
+                errorMessage.style.display = 'none';
+                notAvailableMessage.style.display = 'none';
+                
+                // Simuler un délai de chargement
+                setTimeout(() => {
+                    loadingIndicator.style.display = 'none';
+                    showNotAvailable();
+                }, 1500);
+                return;
+            }
+            
+            loadingIndicator.style.display = 'block';
+            resultContainer.style.display = 'none';
+            errorMessage.style.display = 'none';
+            notAvailableMessage.style.display = 'none';
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                displayResults(matricule);
+            }, 1500);
+        }
+
+        // Event Listeners
+        searchBtn.addEventListener('click', searchResults);
+        
+        matriculeInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchResults();
+            }
+        });
+        
+        themeToggle.addEventListener('click', toggleTheme);
+        
+        printBtn.addEventListener('click', () => {
+            window.print();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createFloatingElements();
+            checkTheme();
+            
+            // Animation for elements
+            const animateElements = document.querySelectorAll('.logo, .hero h2, .hero p, .search-box');
+            
+            animateElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -27,9 +27,16 @@
         footer { background:var(--primary-color); color:#fff; text-align:center; padding:30px 0; margin-top:40px; }
     </style>
     <script>
+        // Access guard
+        (function guard(){
+            const isAuthenticated = localStorage.getItem('auth') === 'ok';
+            if (!isAuthenticated) location.replace('login.html');
+        })();
         document.addEventListener('DOMContentLoaded', () => {
             const theme = localStorage.getItem('theme');
             if (theme === 'dark') document.documentElement.setAttribute('data-theme','dark');
+            const logoutLink = document.getElementById('logoutLink');
+            if (logoutLink) logoutLink.addEventListener('click', (e)=>{ e.preventDefault(); localStorage.removeItem('auth'); location.replace('login.html'); });
         });
     </script>
     <style>[data-theme="dark"]{ --primary-color:#34495e; --secondary-color:#2980b9; --light-color:#2c3e50; --dark-color:#ecf0f1; background:#1a1a1a; color:#f5f5f5 }</style>
@@ -49,6 +56,7 @@
                 <a href="about.html">Présentation</a>
                 <a href="login.html">Connexion</a>
                 <a href="contact.html">Contact</a>
+                <a href="#" id="logoutLink" style="background:rgba(231,76,60,0.85)">Déconnexion</a>
             </nav>
         </div>
     </header>

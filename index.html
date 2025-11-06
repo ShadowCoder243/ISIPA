@@ -589,6 +589,7 @@
                 <a href="about.html">Présentation</a>
                 <a href="login.html">Connexion</a>
                 <a href="contact.html">Contact</a>
+                <a href="#" id="logoutLink" style="background:rgba(231,76,60,0.85)">Déconnexion</a>
             </nav>
             <button class="theme-toggle" id="themeToggle">
                 <span id="themeIcon">🌙</span>
@@ -1086,6 +1087,15 @@
             window.print();
         });
 
+        // Simple access guard (demo)
+        (function guard() {
+            const isLoginPage = location.pathname.toLowerCase().endsWith('login.html');
+            const isAuthenticated = localStorage.getItem('auth') === 'ok';
+            if (!isAuthenticated && !isLoginPage) {
+                location.replace('login.html');
+            }
+        })();
+
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             createFloatingElements();
@@ -1100,6 +1110,14 @@
                     el.style.transform = 'translateY(0)';
                 }, index * 200);
             });
+            const logoutLink = document.getElementById('logoutLink');
+            if (logoutLink) {
+                logoutLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('auth');
+                    location.replace('login.html');
+                });
+            }
         });
     </script>
 </body>

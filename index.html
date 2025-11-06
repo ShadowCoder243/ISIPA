@@ -264,7 +264,42 @@
             background-color: var(--text-color, rgba(0, 0, 0, 0.1));
         }
 
-        
+        /* SECTION PRESENTATION */
+        .presentation {
+            margin: 40px auto 0;
+            background: white;
+            color: var(--dark-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 24px;
+            background-color: var(--card-bg, white);
+        }
+
+        .presentation h2, .presentation h3 {
+            margin-bottom: 12px;
+            color: var(--primary-color);
+        }
+
+        .presentation p { margin-bottom: 12px; }
+        .presentation ul { margin: 8px 0 16px 18px; }
+        .presentation li { margin: 6px 0; }
+
+        .presentation table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0 8px 0;
+        }
+        .presentation table th,
+        .presentation table td {
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 10px 12px;
+            text-align: left;
+        }
+        .presentation table th {
+            background: var(--secondary-color);
+            color: #fff;
+        }
+
 
         /* MODIFICATIONS COULEURS - SUJET, COTES, MAX EN NOIR */
         .results-table td:first-child, /* Matières */
@@ -561,7 +596,84 @@
         </div>
     </section>
 
-    
+    <div class="container">
+        <section class="presentation" aria-labelledby="presentation-title">
+            <h2 id="presentation-title">🧾 Présentation approfondie de la plateforme ISIPA Résultats</h2>
+            <p>La plateforme ISIPA Résultats est un outil numérique conçu pour offrir aux étudiants une gestion fluide, sécurisée et centralisée de leur parcours académique. Elle permet :</p>
+            <ul>
+                <li>🔍 <strong>Consultation instantanée des résultats académiques</strong> : chaque étudiant peut accéder à ses notes dès leur publication, avec une interface intuitive qui facilite la lecture et la compréhension.</li>
+                <li>🖨️ <strong>Impression des relevés de notes</strong> : les documents sont générés dans un format clair et officiel, prêts à être imprimés ou téléchargés.</li>
+                <li>💰 <strong>Suivi des frais académiques</strong> : les étudiants peuvent consulter l’état de leurs paiements, les échéances à venir et les éventuelles pénalités.</li>
+            </ul>
+            <p>Pensée pour une accessibilité maximale, la plateforme est :</p>
+            <ul>
+                <li>📱 <strong>Optimisée pour mobile</strong> : elle s’adapte parfaitement aux écrans de smartphones et tablettes.</li>
+                <li>🌙 <strong>Dotée d’un mode sombre</strong> : pour un confort visuel accru, notamment en environnement nocturne.</li>
+                <li>🎞️ <strong>Animée avec légèreté</strong> : les transitions et interactions sont fluides, sans ralentir la navigation.</li>
+            </ul>
+
+            <h2>🔧 Prochaines améliorations prévues</h2>
+            <p>Voici les fonctionnalités en cours de développement pour enrichir l’expérience utilisateur :</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fonctionnalité</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🔐 Authentification sécurisée</td>
+                        <td>Connexion par matricule et mot de passe, avec chiffrement des données.</td>
+                    </tr>
+                    <tr>
+                        <td>🔄 Vérification en temps réel</td>
+                        <td>Intégration d’une API connectée aux bases officielles pour garantir l’exactitude des données.</td>
+                    </tr>
+                    <tr>
+                        <td>📂 Historique des sessions</td>
+                        <td>Suivi des connexions et actions effectuées, avec export en PDF.</td>
+                    </tr>
+                    <tr>
+                        <td>📣 Notifications automatiques</td>
+                        <td>Alertes par email ou SMS dès qu’un nouveau résultat est publié.</td>
+                    </tr>
+                    <tr>
+                        <td>👨‍🏫 Espace enseignant</td>
+                        <td>Interface dédiée pour la saisie et validation des notes.</td>
+                    </tr>
+                    <tr>
+                        <td>♿ Accessibilité renforcée</td>
+                        <td>Compatibilité avec la navigation clavier, contraste élevé, et balises ARIA pour les lecteurs d’écran.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🚀 Suggestions pour aller encore plus loin</h2>
+            <h3>🔍 Fonctionnalités avancées</h3>
+            <ul>
+                <li><strong>Recherche intelligente</strong> : permettre aux étudiants de filtrer leurs résultats par matière, semestre ou enseignant.</li>
+                <li><strong>Tableau de bord personnalisé</strong> : affichage des statistiques (moyenne générale, progression, taux de réussite).</li>
+                <li><strong>Support multilingue</strong> : interface disponible en français, anglais, et langues locales.</li>
+            </ul>
+            <h3>🤝 Interaction et collaboration</h3>
+            <ul>
+                <li><strong>Forum étudiant</strong> : espace d’échange entre étudiants pour poser des questions ou partager des ressources.</li>
+                <li><strong>Chat d’assistance</strong> : support technique intégré pour répondre aux problèmes de connexion ou d’accès aux données.</li>
+            </ul>
+            <h3>📊 Administration et reporting</h3>
+            <ul>
+                <li><strong>Outils d’analyse pour l’administration</strong> : visualisation des performances globales, taux de réussite par filière, etc.</li>
+                <li><strong>Export Excel/CSV</strong> : pour faciliter les traitements hors ligne des données académiques.</li>
+            </ul>
+            <h3>🔒 Sécurité renforcée</h3>
+            <ul>
+                <li><strong>Authentification à deux facteurs (2FA)</strong> : pour une protection accrue des comptes.</li>
+                <li><strong>Journal d’audit</strong> : suivi des modifications et accès aux données sensibles.</li>
+            </ul>
+        </section>
+    </div>
+
 
     <div class="container">
         <div class="result-container" id="resultContainer">

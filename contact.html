@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - ISIPA Résultats</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary-color:#2c3e50; --secondary-color:#3498db; --light-color:#ecf0f1; --dark-color:#2c3e50; --shadow:0 4px 6px rgba(0,0,0,0.1); --transition:all .3s ease; }
+        body { margin:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:var(--light-color); color:var(--dark-color); }
+        header { background:linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color:#fff; box-shadow:var(--shadow); }
+        .container { max-width:1200px; margin:0 auto; padding:20px; }
+        .header-content { display:flex; justify-content:space-between; align-items:center; gap:16px; }
+        .logo { display:flex; align-items:center; gap:15px; }
+        .logo img { max-width:140px; width:100%; height:auto; border-radius:50%; display:block; }
+        nav.primary-nav { display:flex; gap:16px; align-items:center; }
+        nav.primary-nav a { color:#fff; text-decoration:none; padding:8px 12px; border-radius:8px; background:rgba(255,255,255,0.12); transition:var(--transition); }
+        nav.primary-nav a:hover { background:rgba(255,255,255,0.22); transform:translateY(-1px); }
+        .card { max-width:720px; margin:40px auto; background:#fff; border-radius:12px; box-shadow:var(--shadow); padding:24px; }
+        label { display:block; margin:10px 0 6px; }
+        input, textarea { width:100%; padding:12px 14px; border-radius:8px; border:1px solid rgba(0,0,0,0.15); }
+        textarea { min-height:140px; resize:vertical; }
+        button { margin-top:16px; background:var(--secondary-color); color:#fff; border:none; padding:12px 16px; border-radius:10px; cursor:pointer; transition:var(--transition); }
+        button:hover { background:var(--primary-color); transform:translateY(-1px); }
+        .hint { font-size:0.9rem; opacity:0.8; margin-top:8px; }
+        .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+        @media (max-width: 720px) { .grid { grid-template-columns:1fr; } }
+        footer { background:var(--primary-color); color:#fff; text-align:center; padding:30px 0; margin-top:40px; }
+    </style>
+    <style>[data-theme="dark"]{ --primary-color:#34495e; --secondary-color:#2980b9; --light-color:#2c3e50; --dark-color:#ecf0f1; background:#1a1a1a; color:#f5f5f5 }</style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const theme = localStorage.getItem('theme');
+            if (theme === 'dark') document.documentElement.setAttribute('data-theme','dark');
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="1717267750802.jpg" alt="Logo ISIPA">
+                <div class="logo-text">
+                    <h1>ISIPA Résultats</h1>
+                    <p>Contact</p>
+                </div>
+            </div>
+            <nav class="primary-nav" aria-label="Navigation principale">
+                <a href="index.html">Accueil</a>
+                <a href="about.html">Présentation</a>
+                <a href="login.html">Connexion</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card" aria-labelledby="contact-title">
+            <h2 id="contact-title">Nous contacter</h2>
+            <form onsubmit="event.preventDefault(); alert('Message envoyé (démo).');">
+                <div class="grid">
+                    <div>
+                        <label for="name">Nom complet</label>
+                        <input id="name" name="name" placeholder="Votre nom" required>
+                    </div>
+                    <div>
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" placeholder="vous@exemple.com" required>
+                    </div>
+                </div>
+                <label for="subject">Sujet</label>
+                <input id="subject" name="subject" placeholder="Objet du message" required>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Votre message..." required></textarea>
+                <button type="submit"><i class="fa fa-paper-plane"></i> Envoyer</button>
+                <p class="hint">Formulaire de démonstration. La soumission réelle pourra être reliée à un service email/API.</p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Institut Supérieur d'Informatique, Programmation et Analyse</p>
+            <p>© 2026 — ISIPA Résultats</p>
+        </div>
+    </footer>
+</body>
+</html>
+
+

@@ -65,6 +65,26 @@
             z-index: 2;
         }
 
+        nav.primary-nav {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        nav.primary-nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: var(--transition);
+            background: rgba(255,255,255,0.12);
+        }
+
+        nav.primary-nav a:hover {
+            background: rgba(255,255,255,0.22);
+            transform: translateY(-1px);
+        }
+
         .logo {
             display: flex;
             align-items: center;
@@ -564,6 +584,12 @@
                     <p>Consultez vos résultats académiques en ligne</p>
                 </div>
             </div>
+            <nav class="primary-nav" aria-label="Navigation principale">
+                <a href="index.html">Accueil</a>
+                <a href="about.html">Présentation</a>
+                <a href="login.html">Connexion</a>
+                <a href="contact.html">Contact</a>
+            </nav>
             <button class="theme-toggle" id="themeToggle">
                 <span id="themeIcon">🌙</span>
                 <span id="themeText">Mode sombre</span>
